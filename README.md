@@ -419,3 +419,93 @@ let Physics: Course<string[]> = {
 console.log(Math10)
 console.log(Physics)
 ```
+
+<br/><br/>
+
+## Enums in TypeScript
+
+Allows us to define or declare a collection of related values
+Descriptive constants
+
+```
+enum Direction {
+  Up = 'Up',
+  Right = 'Right',
+  Down = 'Down',
+  Left = 'Left',
+}
+```
+
+<br/><br/>
+
+## TypeScript Config
+
+- This will cause TypeScript to report more errors, but will help prevent many bugs from creeping into your application.
+
+```
+// tsconfig.json
+"strict": true
+```
+
+- TypeScript will instantly flag an error if we don't explicitly state the type
+
+```
+// tsconfig.json
+"noImplicitAny": true
+```
+
+- TypeScript will raise an error because we haven't made a guarantee that there will be a concrete value
+
+```
+// tsconfig.json
+"strictNullChecks": true
+```
+
+<br/><br/>
+
+## Narrowing in TypeScript
+
+moving a variable from a less precise type to an more precise type
+
+1. Using if-statement with `typeof`
+
+   ```
+   function addAnother(val: string | number) {
+     if (typeof val === 'string') {
+       // TypeScript treats `val` as a string in this block, so we can use string methods on `val` and TypeScript won't shout at us
+       return val.concat(' ' + val);
+     }
+
+     // TypeScript knows `val` is a number here
+     return val + val;
+   }
+
+   ```
+
+2. Using a Literal String value
+
+```
+interface Vehicle {
+  topSpeed: number;
+}
+
+interface Plane extends Vehicle {
+  type: 'Plane';
+  wingSpan: number;
+}
+
+interface Train extends Vehicle {
+  type: 'Train';
+  carriages: number;
+}
+
+type PlaneOrTrain = Plane | Train
+
+const getSpeedRatio = (vehicle: PlaneOrTrain) => {
+  if (vehicle.type === 'Train') {
+    return vehicle.topSpeed / vehicle.carriages
+  }
+  return vehicle.topSpeed / vehicle.wingSpan
+}
+
+```
