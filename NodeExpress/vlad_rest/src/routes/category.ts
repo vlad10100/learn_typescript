@@ -14,13 +14,18 @@ categoryRoute.get("/", async (req, res) => {
 
 categoryRoute.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const query = categories.where("id", "==", id);
-  const resp = await query.get();
-  console.log(resp.docs);
-  res.status(200).json(`GET CATEGORY: ${id}`);
+  const data = await categories.doc(id).get();
+  const resp = data.data();
+  res.status(200).json({ id, ...resp });
 });
 
-categoryRoute.post("/", (req, res) => {
+categoryRoute.post("/", async (req, res) => {
+  const payload = {
+    name: "category C",
+  };
+  const category = categories.doc("random id");
+  const v = await category.set(payload);
+
   res.status(200).json("CREATE a CATEGORY");
 });
 
