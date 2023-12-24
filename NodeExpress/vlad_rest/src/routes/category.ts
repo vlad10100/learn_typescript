@@ -34,7 +34,10 @@ categoryRoute.get("/:id", async (req, res) => {
   const docRef = doc(db, "category", id);
   const data = await getDoc(docRef);
 
-  res.status(200).json(data.data());
+  res.status(200).json({
+    id: data.id,
+    ...data.data(),
+  });
 });
 
 /**

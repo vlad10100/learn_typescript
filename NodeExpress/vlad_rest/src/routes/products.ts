@@ -36,6 +36,7 @@ productRoute.get("/:product_id", async (req: express.Request, res) => {
   const productRef = collection(categoryDocRef, "products");
   const productDoc = doc(productRef, product_id);
   const data = await getDoc(productDoc);
+  console.log(data.data());
   res.status(200).json(data.data());
 });
 
