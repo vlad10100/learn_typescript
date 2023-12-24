@@ -1,14 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.db = exports.categories = void 0;
-const app_1 = require("firebase-admin/app");
-const firestore_1 = require("firebase-admin/firestore");
-const credentials = require("../src/credentials.json");
-const app = (0, app_1.initializeApp)({
-    credential: (0, app_1.cert)(credentials),
-});
-const db = (0, firestore_1.getFirestore)(app);
+exports.db = void 0;
+const app_1 = require("firebase/app");
+const firestore_1 = require("firebase/firestore");
+const firebaseConfig = {
+    apiKey: "AIzaSyDuAdF7JIjSCQvJFVhu4KpbaRO2fp-BORE",
+    authDomain: "forzaforzaforza-3fb61.firebaseapp.com",
+    projectId: "forzaforzaforza-3fb61",
+    storageBucket: "forzaforzaforza-3fb61.appspot.com",
+    messagingSenderId: "144609460325",
+    appId: "1:144609460325:web:806157142379ec969f068c",
+    measurementId: "G-NESQ7V2HW4",
+};
+(0, app_1.initializeApp)(firebaseConfig);
+const db = (0, firestore_1.getFirestore)();
 exports.db = db;
-const categories = db.collection("category");
-exports.categories = categories;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZmlyZWJhc2UuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvZmlyZWJhc2UudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsNENBQXlEO0FBQ3pELHdEQUF3RDtBQUV4RCxNQUFNLFdBQVcsR0FBRyxPQUFPLENBQUMseUJBQXlCLENBQUMsQ0FBQztBQUV2RCxNQUFNLEdBQUcsR0FBRyxJQUFBLG1CQUFhLEVBQUM7SUFDeEIsVUFBVSxFQUFFLElBQUEsVUFBSSxFQUFDLFdBQVcsQ0FBQztDQUM5QixDQUFDLENBQUM7QUFDSCxNQUFNLEVBQUUsR0FBRyxJQUFBLHdCQUFZLEVBQUMsR0FBRyxDQUFDLENBQUM7QUFHUixnQkFBRTtBQUZ2QixNQUFNLFVBQVUsR0FBRyxFQUFFLENBQUMsVUFBVSxDQUFDLFVBQVUsQ0FBQyxDQUFDO0FBRXBDLGdDQUFVIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZmlyZWJhc2UuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvZmlyZWJhc2UudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsc0NBQTZDO0FBQzdDLGtEQUE4RDtBQUU5RCxNQUFNLGNBQWMsR0FBRztJQUNyQixNQUFNLEVBQUUseUNBQXlDO0lBQ2pELFVBQVUsRUFBRSx1Q0FBdUM7SUFDbkQsU0FBUyxFQUFFLHVCQUF1QjtJQUNsQyxhQUFhLEVBQUUsbUNBQW1DO0lBQ2xELGlCQUFpQixFQUFFLGNBQWM7SUFDakMsS0FBSyxFQUFFLDJDQUEyQztJQUNsRCxhQUFhLEVBQUUsY0FBYztDQUM5QixDQUFDO0FBRUYsSUFBQSxtQkFBYSxFQUFDLGNBQWMsQ0FBQyxDQUFDO0FBQzlCLE1BQU0sRUFBRSxHQUFHLElBQUEsd0JBQVksR0FBRSxDQUFDO0FBRWpCLGdCQUFFIn0=

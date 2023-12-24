@@ -3,7 +3,7 @@ import bodyparser from "body-parser";
 import winston from "winston";
 import expressWinston from "express-winston";
 import cors from "cors";
-import categoryRoute from "./routes/category";
+import { categoryRoute } from "./routes/category";
 import { authGuard } from "./middlewares/authGuard";
 
 const app: express.Application = express();
@@ -27,3 +27,5 @@ app.use("/category", categoryRoute);
 app.listen(port, () => {
   console.log("Server is running at port 8888");
 });
+
+export default app;
