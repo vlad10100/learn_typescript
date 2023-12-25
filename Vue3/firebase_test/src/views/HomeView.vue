@@ -11,19 +11,21 @@ const categories = ref<Array<Object>>([])
 const selectedCategory = ref<Object>({ name: '', id: '' })
 const categoryProducts = ref<Array<Object>>([])
 const selectedProduct = ref<Object>({ name: '', id: '' })
-const categoryOperation = ref<'add' | 'update' | 'delete'>('add')
-const categoryName = ref('')
+const productOperation = ref<'add' | 'update' | 'delete'>('add')
+const productName = ref('')
 
 const getCategoryById = async (id: string) => {
-  const { data } = await axios(`http://localhost:8888/category/${id}`)
+  const { data } = await axios.get(`http://localhost:8888/category/${id}`)
   return data
 }
 const getCategoryProducts = async (id: string) => {
-  const { data } = await axios(`http://localhost:8888/category/${id}/products`)
+  const { data } = await axios.get(`http://localhost:8888/category/${id}/products`)
   return data
 }
 const getProductById = async (categoryId: string, productId: string) => {
-  const { data } = await axios(`http://localhost:8888/category/${categoryId}/products/${productId}`)
+  const { data } = await axios.get(
+    `http://localhost:8888/category/${categoryId}/products/${productId}`
+  )
   return data
 }
 
@@ -34,13 +36,13 @@ const selectCategory = async (id: string) => {
 }
 
 const categoryTitle = computed(() => {
-  switch (categoryOperation.value) {
+  switch (productOperation.value) {
     case 'add':
-      return 'Add Category'
+      return 'Add Product'
     case 'update':
-      return 'Update Category'
+      return 'Update Category Name'
     case 'delete':
-      return 'Delete Category'
+      return 'Delete Product'
     default:
       return ''
   }
@@ -49,15 +51,15 @@ const categoryTitle = computed(() => {
 const changeOperation = (operation: string) => {
   switch (operation) {
     case 'add':
-      categoryName.value = ''
-      categoryOperation.value = 'add'
+      productName.value = ''
+      productOperation.value = 'add'
       break
     case 'update':
-      categoryName.value = selectedCategory.value.name
-      categoryOperation.value = 'update'
+      productName.value = selectedCategory.value.name
+      productOperation.value = 'update'
       break
     case 'delete':
-      categoryOperation.value = 'delete'
+      productOperation.value = 'delete'
       break
     default:
       return ''
@@ -68,13 +70,23 @@ const selectProduct = async (categoryId: string, productId: string) => {
   selectedProduct.value = await getProductById(categoryId, productId)
 }
 
-const addOrUpdateCategory = () => {
-  console.log(categoryName.value)
-  if (categoryOperation.value === 'add') {
-    console.log('add')
-  }
-  if (categoryOperation.value === 'update') {
-    console.log('update')
+const addOrUpdateCategory = async () => {
+  try {
+    const payload = {
+      name: productName.value
+    }
+    const categoryId = selectedCategory.value.id
+    if (productOperation.value === 'add') {
+      await axios.post(`http://localhost:8888/category/${categoryId}/products`, payload)
+      await selectCategory(categoryId)
+    }
+    if (productOperation.value === 'update') {
+      await axios.patch(`http://localhost:8888/category/${categoryId}`, payload)
+      const { data } = await axios.get('http://localhost:8888/category')
+      categories.value = data
+    }
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -83,7 +95,7 @@ const deleteCategory = () => {
 }
 
 onMounted(async () => {
-  const { data } = await axios('http://localhost:8888/category')
+  const { data } = await axios.get('http://localhost:8888/category')
   categories.value = data
 })
 </script>
@@ -112,10 +124,10 @@ onMounted(async () => {
       </div>
       <div class="w-56 space-y-2">
         <h1>{{ categoryTitle }}</h1>
-        <div v-if="categoryOperation !== 'delete'" class="space-y-2">
+        <div v-if="productOperation !== 'delete'" class="space-y-2">
           <input
             type="text"
-            v-model="categoryName"
+            v-model="productName"
             class="border border-black rounded-md p-1 w-full"
           />
           <div class="flex justify-end">
