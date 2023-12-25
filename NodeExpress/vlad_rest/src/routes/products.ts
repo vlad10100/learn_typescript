@@ -47,9 +47,7 @@ productRoute.post("/", async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
   const categoryDocRef = doc(db, "category", id);
   const productRef = collection(categoryDocRef, "products");
-  const payload = {
-    name: "Product ni Vlad 1",
-  };
+  const payload = req.body;
   await addDoc(productRef, payload);
   res.status(200).json("Created a Product");
 });
@@ -64,9 +62,7 @@ productRoute.put(
     const categoryDocRef = doc(db, "category", id);
     const productRef = collection(categoryDocRef, "products");
     const productDoc = doc(productRef, product_id);
-    const payload = {
-      name: "Product ni Vlad updated",
-    };
+    const payload = req.body;
     await updateDoc(productDoc, payload);
     res.status(200).json("updated a Product");
   }

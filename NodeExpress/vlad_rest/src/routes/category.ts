@@ -44,22 +44,18 @@ categoryRoute.get("/:id", async (req, res) => {
  * Add a category
  */
 categoryRoute.post("/", async (req, res) => {
-  const payload = {
-    name: "category 123",
-  };
-  const v = await addDoc(categoryRef, payload);
+  const payload = req.body;
+  await addDoc(categoryRef, payload);
   res.status(200).json("CREATE a CATEGORY");
 });
 
 /**
  * Update a Category
  */
-categoryRoute.put("/:id", async (req, res) => {
+categoryRoute.patch("/:id", async (req, res) => {
   const { id } = req.params;
   const docRef = doc(db, "category", id);
-  const payload = {
-    name: "edamame123",
-  };
+  const payload = req.body;
   await updateDoc(docRef, payload);
   res.status(200).json("Updated a Category");
 });
