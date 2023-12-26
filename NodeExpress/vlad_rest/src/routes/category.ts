@@ -46,7 +46,7 @@ categoryRoute.get("/:id", async (req, res) => {
 categoryRoute.post("/", async (req, res) => {
   const payload = req.body;
   await addDoc(categoryRef, payload);
-  res.status(200).json("CREATE a CATEGORY");
+  res.status(200).json("Created a CATEGORY");
 });
 
 /**

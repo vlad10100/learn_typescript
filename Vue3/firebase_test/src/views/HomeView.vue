@@ -77,8 +77,11 @@ const addOrUpdateCategory = async () => {
     }
     const categoryId = selectedCategory.value.id
     if (productOperation.value === 'add') {
-      await axios.post(`http://localhost:8888/category/${categoryId}/products`, payload)
+      await axios.post(`http://localhost:8888/category`, payload)
       await selectCategory(categoryId)
+      const { data } = await axios.get('http://localhost:8888/category')
+      categories.value = data
+      productName.value = ''
     }
     if (productOperation.value === 'update') {
       await axios.patch(`http://localhost:8888/category/${categoryId}`, payload)
